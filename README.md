@@ -67,6 +67,9 @@ I know, I know. You just read about how there's this scope gate and stuff, but t
 
 When you pass in a variable, you're not passing in a value. You're passing in a reference to an object. If you have that reference, and send a message to it, such as `#<<`, it's going to respond with its programmed instructions!
 
+Beautiful.
+
+
 This will always be the except for `variables bound to integers`, so
 
 ``` ruby
@@ -78,9 +81,3 @@ end
 age_me_by(age, 60)
 age #=> 31
 ```
-
-
-Beautiful.
-
-* Method that mutates array, and string
-* Method that returns new array and string
