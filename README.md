@@ -78,8 +78,8 @@ def age_me_by(start_age, age_amount)
   start_age = start_age + age_amount
 end
 
-age_me_by(age, 60)
-age #=> 91
+age_me_by(age, 60) #=> 91
+age #=> 31
 ```
 
 ## Resources
