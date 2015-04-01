@@ -81,6 +81,14 @@ end
 age_me_by(age, 60) #=> 91
 age #=> 31
 ```
+## Objectives
+1. Learn how Ruby variables differ from the objects they point to.
+2. Think about how this affects scope.
+
+## Instructions
+1. Write a method which takes an array and a string as parameters and returns the array with the string added.
+2. Write another method takes the same parameters and has the same output without modifying the original array.
+3. Run rspec to and check the specs to get started!
 
 ## Resources
 
