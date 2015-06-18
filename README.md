@@ -1,17 +1,18 @@
----
-tags: scope, pass by reference
-languages: ruby
-resources:
----
 # Pass By Reference
+
+## Objectives
+
+1. Get a refresher on method scope in Ruby
+2. Learn how Ruby variables can differ from the objects they point to
+3. Understand the concept of mutability in Ruby
 
 > `str = "Hello"`
 
 > ...variables in Ruby (with a few exceptions, most notably variables bound to integers) don’t hold __object values__. str doesn’t contain “Hello”. Rather, str contains a __reference__ to a string object. It’s the string object that has the characteristic of containing the letters that make up “Hello”.
 > ### -David Black - The Well Grounded Rubyist
 
-## Pass by What now? - Method Scope in Ruby
-Methods in ruby create their own scope. Any local variable created outside of a method will be unavailable inside of a method. In addition, local variables created inside a method 'fall out of scope' once you're outside the method.
+## Method Scope in Ruby
+Let's take a moment to refresh our membory about method scope. Methods in ruby create their own scope. Any local variable created outside of a method will be unavailable inside of a method. In addition, local variables created inside a method 'fall out of scope' once you're outside the method.
 
 ### Unavailable variable
 
@@ -65,12 +66,38 @@ names #=> ["Steven", "Avi", "Joe"]
 
 I know, I know. You just read about how there's this scope gate and stuff, but this makes total sense.
 
-When you pass in a variable, you're not passing in a value. You're passing in a reference to an object. If you have that reference, and send a message to it, such as `#<<`, it's going to respond with its programmed instructions!
+*When you pass in a variable, you're not passing in a value. You're passing in a reference to an object*. If you have that reference, and send a message to it, such as `#<<`, it's going to respond with its programmed instructions!
 
-Beautiful.
+## Pass by Reference vs. Pass by Value
 
+In previous lessons, we've learned that calling the `.each` iteration method on a collection, like an array, will return the original collection. Check it out: 
 
-This will always be the except for `variables bound to integers`, so
+```ruby
+array = [2, 4, 6]
+array.each do |num|
+	num * num 
+end
+
+  #=> [2, 4, 6]
+```
+
+But, there are exceptions to this rule. Watch this: 
+
+```ruby
+array = ["one", "two", "three"]
+array.each do |word|
+	word << "!"
+end
+  #=> ["one!", "two!", "three!"]
+```
+
+We just modified an array using `.each`! How is this possible? 
+
+In Ruby, objects are either passed by value or passed by reference. Primitive data like integers, floats, fixnums, and symbols require a fixed, small amount of memory. Consequently, when you pass around an integer, you are passing and then operating on the *actual value*. Objects that can grow and change, like arrays and strings, are never a fixed size. They are instead always referenced by some pointer, in order to save memory use in a program.
+
+**Thus, certain objects like strings and arrays are mutable within an `.each` method:**
+
+On the other hand, **variables bound to integers are not mutable:**
 
 ``` ruby
 age = 31
@@ -81,14 +108,6 @@ end
 age_me_by(age, 60) #=> 91
 age #=> 31
 ```
-## Objectives
-1. Learn how Ruby variables differ from the objects they point to.
-2. Think about how this affects scope.
-
-## Instructions
-1. Write a method which takes an array and a string as parameters and returns the array with the string added.
-2. Write another method takes the same parameters and has the same output without modifying the original array.
-3. Run rspec to and check the specs to get started!
 
 ## Resources
 
