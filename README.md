@@ -70,44 +70,56 @@ I know, I know. You just read about how there's this scope gate and stuff, but t
 
 ## Pass by Reference vs. Pass by Value
 
-In previous lessons, we've learned that calling the `.each` iteration method on a collection, like an array, will return the original collection. Check it out: 
+In Ruby, objects are either passed by value or passed by reference. Primitive data like integers, floats, fixnums, and symbols require a fixed, small amount of memory. Consequently, when you pass around an integer, you are passing around the *actual value*. Objects that can grow and change, like arrays and strings, are never a fixed size. They are instead always referenced by some pointer, in order to save memory use in a program.
+
+**Thus, variables that point to certains objects, those that are passed by reference like strings and arrays, are mutable**. This means that if you pass such a variable into a method, the method can operate on the value of that variable and change it. 
+
+Let's take a look: 
 
 ```ruby
-array = [2, 4, 6]
-array.each do |num|
-	num * num 
+def change_the_array(array, string)
+  array << string
 end
 
-  #=> [2, 4, 6]
+some_words = ["hi", "there"]
+change_the_array(some_words, "quizmaster")
+
+puts.array.inspect
+  #=> ["hi", "there", "quizmaster"]
+
 ```
 
-But, there are exceptions to this rule. Watch this: 
+Since arrays are mutable, when we pass the variable, `some_words`, which *references* an array, into the method, `change_the_array`, the method *actually changes the array!*
 
-```ruby
-array = ["one", "two", "three"]
-array.each do |word|
-	word << "!"
-end
-  #=> ["one!", "two!", "three!"]
-```
 
-We just modified an array using `.each`! How is this possible? 
+On the other hand, **variables bound to objects that are passed by value, like integers, are not mutable.** This means that if you pass such a variable into a method, the method *cannot* operate on that value and change it. 
 
-In Ruby, objects are either passed by value or passed by reference. Primitive data like integers, floats, fixnums, and symbols require a fixed, small amount of memory. Consequently, when you pass around an integer, you are passing and then operating on the *actual value*. Objects that can grow and change, like arrays and strings, are never a fixed size. They are instead always referenced by some pointer, in order to save memory use in a program.
-
-**Thus, certain objects like strings and arrays are mutable within an `.each` method:**
-
-On the other hand, **variables bound to integers are not mutable:**
+Let's take a look:
 
 ``` ruby
-age = 31
 def age_me_by(start_age, age_amount)
   start_age = start_age + age_amount
 end
 
+age = 31
+
 age_me_by(age, 60) #=> 91
 age #=> 31
 ```
+
+Here, when we passed the variable, `age`, into the method, `age_me_by`, we passed in the actual *value* of `31`. Since variables that point to integers are not mutable, our method's attempt to change the value of `age` did not work. `age` *still* has a value of `31`. 
+
+Here's a handy reference regarding different datatypes and their mutability:
+
+|Data Type|Pass by?|
+|-------|------|
+|strings|pass by reference|
+|arrays|pass by reference|
+|hashes|pass by reference|
+|fixnums|pass by value|
+|floats| pass by value|
+|booleans| pass by value
+
 
 ## Resources
 
