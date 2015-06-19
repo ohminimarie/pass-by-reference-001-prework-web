@@ -1,17 +1,18 @@
----
-tags: scope, pass by reference
-languages: ruby
-resources:
----
 # Pass By Reference
+
+## Objectives
+
+1. Get a refresher on method scope in Ruby
+2. Learn how Ruby variables can differ from the objects they point to
+3. Understand the concept of mutability in Ruby
 
 > `str = "Hello"`
 
 > ...variables in Ruby (with a few exceptions, most notably variables bound to integers) don’t hold __object values__. str doesn’t contain “Hello”. Rather, str contains a __reference__ to a string object. It’s the string object that has the characteristic of containing the letters that make up “Hello”.
 > ### -David Black - The Well Grounded Rubyist
 
-## Pass by What now? - Method Scope in Ruby
-Methods in ruby create their own scope. Any local variable created outside of a method will be unavailable inside of a method. In addition, local variables created inside a method 'fall out of scope' once you're outside the method.
+## Method Scope in Ruby
+Let's take a moment to refresh our membory about method scope. Methods in ruby create their own scope. Any local variable created outside of a method will be unavailable inside of a method. In addition, local variables created inside a method 'fall out of scope' once you're outside the method.
 
 ### Unavailable variable
 
@@ -65,30 +66,60 @@ names #=> ["Steven", "Avi", "Joe"]
 
 I know, I know. You just read about how there's this scope gate and stuff, but this makes total sense.
 
-When you pass in a variable, you're not passing in a value. You're passing in a reference to an object. If you have that reference, and send a message to it, such as `#<<`, it's going to respond with its programmed instructions!
+*When you pass in a variable, you're not passing in a value. You're passing in a reference to an object*. If you have that reference, and send a message to it, such as `#<<`, it's going to respond with its programmed instructions!
 
-Beautiful.
+## Pass by Reference vs. Pass by Value
+
+In Ruby, objects are either passed by value or passed by reference. Primitive data like integers, floats, fixnums, and symbols require a fixed, small amount of memory. Consequently, when you pass around an integer, you are passing around the *actual value*. Objects that can grow and change, like arrays and strings, are never a fixed size. They are instead always referenced by some pointer, in order to save memory use in a program.
+
+**Thus, variables that point to certains objects, those that are passed by reference like strings and arrays, are mutable**. This means that if you pass such a variable into a method, the method can operate on the value of that variable and change it. 
+
+Let's take a look: 
+
+```ruby
+def change_the_array(array, string)
+  array << string
+end
+
+some_words = ["hi", "there"]
+change_the_array(some_words, "quizmaster")
+
+puts.array.inspect
+  #=> ["hi", "there", "quizmaster"]
+
+```
+
+Since arrays are mutable, when we pass the variable, `some_words`, which *references* an array, into the method, `change_the_array`, the method *actually changes the array!*
 
 
-This will always be the except for `variables bound to integers`, so
+On the other hand, **variables bound to objects that are passed by value, like integers, are not mutable.** This means that if you pass such a variable into a method, the method *cannot* operate on that value and change it. 
+
+Let's take a look:
 
 ``` ruby
-age = 31
 def age_me_by(start_age, age_amount)
   start_age = start_age + age_amount
 end
 
+age = 31
+
 age_me_by(age, 60) #=> 91
 age #=> 31
 ```
-## Objectives
-1. Learn how Ruby variables differ from the objects they point to.
-2. Think about how this affects scope.
 
-## Instructions
-1. Write a method which takes an array and a string as parameters and returns the array with the string added.
-2. Write another method takes the same parameters and has the same output without modifying the original array.
-3. Run rspec to and check the specs to get started!
+Here, when we passed the variable, `age`, into the method, `age_me_by`, we passed in the actual *value* of `31`. Since variables that point to integers are not mutable, our method's attempt to change the value of `age` did not work. `age` *still* has a value of `31`. 
+
+Here's a handy reference regarding different datatypes and their mutability:
+
+|Data Type|Pass by?|
+|-------|------|
+|strings|pass by reference|
+|arrays|pass by reference|
+|hashes|pass by reference|
+|fixnums|pass by value|
+|floats| pass by value|
+|booleans| pass by value
+
 
 ## Resources
 
