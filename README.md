@@ -30,9 +30,9 @@ print_the_answer
 NameError: undefined local variable or method 'the_answer_to_the_ultimate_question_of_life_the_universe_and_everything' for main:Object
 ```
 
-Why can't the method not see the answer? It's right there! It's because methods drop an imaginary "gate" around their environment, closing out all other local variables.
+Why can't the method see the answer? It's right there! It's because methods drop an imaginary "gate" around their environment, closing out all other local variables.
 
-Hm, well what about a variable declared inside a method body?
+Hmm... well what about a variable declared inside a method body?
 
 ``` ruby
 def what_are_you_thinking_about?
