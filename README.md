@@ -94,7 +94,7 @@ puts.array.inspect
 
 ```
 
-Since all arrays in Ruby are mutable, when we pass the variable `some_words` (which as a *reference* to an array) into the method `change_the_array`, the method *actually changes the array!*
+Since all arrays in Ruby are mutable, when we pass the variable `some_words` (which is a *reference* to an array) into the method `change_the_array`, the method *actually changes the array!*
 
 
 On the other hand, variables bound to objects that are passed by value, like integers, are **not** mutable. This means that if you pass such a variable into a method, the method *cannot* operate on the original variable's value to change it. 
